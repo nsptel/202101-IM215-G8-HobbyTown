@@ -1,0 +1,25 @@
+<br><br><br>
+<div class="container-fluid footer">
+    <div class="row align-items-center" style="background-color: black; color: white;">
+        <div class="col-md-6 col-xs-12">
+            <p class="text-md-left text-sm-center">
+                <a href="/" style="text-decoration: none; color: white;">&#64; Copyright</a>
+            </p>
+        </div>
+        <div class="col-md-6 col-xs-12" id="last-login">
+            <p class="text-md-right text-sm-center mt-md-2">
+                <% if (user) { %>
+                    Last Login: <%= new Date(user.timestamp).toString() %>
+                <% } %>
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .footer {
+        position: fixed;
+        bottom: 0;
+        min-height: 40px;
+    }
+</style>

@@ -1,0 +1,148 @@
+<%- include ('partials/meta') -%>
+
+<body>
+
+    <%- include ('partials/navbar') -%>
+
+    <div class="container" style="margin-bottom: 60px;">
+
+        <%- include ('partials/msg') -%>
+
+        <form method="POST" action="/register" class="col-lg-8 col-md-12" enctype="multipart/form-data" onsubmit="return registerValidation()">
+            <h1 class="mt-4">Join Us Today!</h1>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input class="form-control" name="email" id="email">
+                <div id="email-fb"></div>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input class="form-control" name="username" id="username">
+                <div id="username-fb"></div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <div class="mb-3">
+                        <label for="first-name" class="form-label">First Name</label>
+                        <input class="form-control" name="first_name" id="first-name">
+                        <div id="firstname-fb"></div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <div class="mb-3">
+                        <label for="last-name" class="form-label">Last Name</label>
+                        <input class="form-control" name="last_name" id="last-name">
+                        <div id="lastname-fb"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" id="password">
+                <div id="password-fb"></div>
+            </div>
+            <div class="mb-3">
+                <label for="confirm-password" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" name="confirm_password" id="confirm-password">
+                <div id="confirm-password-fb"></div>
+            </div>
+            <div id="hobby-block">
+                <div class="row ml-1">
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Ice Hockey" class="form-check-input">
+                            <label class="form-check-label">Ice Hockey</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Table-Tennis" class="form-check-input">
+                            <label class="form-check-label">Table-Tennis</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Lawn-Tennis" class="form-check-input">
+                            <label class="form-check-label">Lawn-Tennis</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Yoga" class="form-check-input">
+                            <label class="form-check-label">Yoga</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Bowling" class="form-check-input">
+                            <label class="form-check-label">Bowling</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Boxing" class="form-check-input">
+                            <label class="form-check-label">Boxing</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Cycling" class="form-check-input">
+                            <label class="form-check-label">Cycling</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Golf" class="form-check-input">
+                            <label class="form-check-label">Golf</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Basketball" class="form-check-input">
+                            <label class="form-check-label">Basketball</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Soccer" class="form-check-input">
+                            <label class="form-check-label">Soccer</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Volleyball" class="form-check-input">
+                            <label class="form-check-label">Volleyball</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-s-6">
+                        <div class="mb-3 mr-3 form-check">
+                            <input name="hobby" type="checkbox" value="Skiing" class="form-check-input">
+                            <label class="form-check-label">Skiing</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 ml-1 form-check">
+                    <input name="hobby" type="checkbox" id="other" value="other" data-toggle="collapse" data-target="#other-hobby-menu" class="form-check-input">
+                    <label class="form-check-label" for="other">Other</label>
+                </div>
+                <div class="mb-3 collapse" id="other-hobby-menu">
+                    <label class="form-label" for="other-hobbies">Enter Your Hobbies (Separated by Commas)</label>
+                    <input class="form-control" id="other-hobbies">
+                    <div id="other-hobbies-fb"></div>
+                </div>
+            </div>
+            <div id="hobby-error"></div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <div class="mt-3 mb-6">
+            <p>Already Have an Account? <a href="/login" class="link">Login</a></p>
+        </div>
+    </div>
+
+    <%- include ('partials/footer') -%>
+
+    <%- include ('partials/scripts') -%>
+
+</body>
+
+</html>

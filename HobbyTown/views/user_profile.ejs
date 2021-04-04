@@ -1,0 +1,20 @@
+<%- include ('partials/meta') -%>
+
+<body>
+
+    <%- include ('partials/navbar') -%>
+
+    <div class="container">
+
+        <%- include ('partials/msg') -%>
+
+        <h1>Welcome <%= user.first_name %>  to your profile!</h1>
+        <a href="/user/<%= user.id %>/edit" class="link">update your profile</a>
+    </div>
+    <%- include ('partials/footer') -%>
+
+    <%- include ('partials/scripts') -%>
+
+</body>
+
+</html>

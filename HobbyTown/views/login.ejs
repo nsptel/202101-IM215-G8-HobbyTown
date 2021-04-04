@@ -1,0 +1,39 @@
+<%- include ('partials/meta') -%>
+
+<body>
+
+    <%- include ('partials/navbar') -%>
+
+    <div class="container">
+
+        <%- include ('partials/msg') -%>
+
+        <h1 class="mt-4">Login to enjoy the full experience!</h1>
+        <form method="POST" action="/login" class="col-lg-8 col-md-12" onsubmit="return loginValidation()">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address / Username</label>
+                <input class="form-control" name="email" id="email" aria-describedby="emailHelp">
+                <div id="email-fb"></div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" id="password">
+                <div id="password-fb"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <div class="mt-3">
+            <p>New Here? <a href="/register" class="link">Register</a></p>
+        </div>
+        <div class="mt-3 mb-6">
+            <p>Forgot Your Credentials? Go <a href="/forgot_password" class="link">Here</a></p>
+        </div>
+    </div>
+
+    <%- include ('partials/footer') -%>
+
+    <%- include ('partials/scripts') -%>
+
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<%- include ('partials/meta') -%>
+
+<body>
+    <%- include ('partials/navbar') -%>
+
+    <div class="container">
+
+        <%- include ('partials/msg') -%>
+
+        <section class="banner mb-5">
+            <% if (!user) { %>
+                <div class="row">
+                    <div class="showcase align-self-center col-md-6 col-sm-12 order-sm-2">
+                        <img src="/showcase.png" style="width: 100%;" alt="showcase image connecting people">
+                    </div>
+                    <div class="promotion align-self-center col-md-6 col-sm-12 order-sm-1">
+                        <h1 style="font-size: 3em;">Join Our Local Community Based on Your Hobbies</h1>
+                        <a class="btn btn-outline-success btn-lg" href="/register">Join Us</a>
+                    </div>
+                </div>
+            <% } else { %>
+                <h1 class="mt-5">Welcome Back, <%= user.first_name %>!</h1>
+            <% } %>
+        </section>
+        <section class="search mb-5">
+            <div class="w-75 mx-auto">
+                <form method="GET">
+                    <div class="form-row align-items-center">
+                        <div class="col-lg-9 col-sm-8 col-xs-8">
+                            <label class="sr-only" for="search">Name</label>
+                            <input type="text" class="form-control" id="search" placeholder="Find your interests...">
+                        </div>
+                        <div class="col-lg-3 col-sm-4 col-xs-4">
+                            <button type="submit" id="search-btn" class="btn btn-primary w-100">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section class="groups mb-5">
+            <div>
+                <h1>Groups</h1>
+                <p>No groups available for now.</p>
+            </div>
+        </section>
+        <section class="events mb-5">
+            <div>
+                <h1>Events</h1>
+                <p>No events available to participate in.</p>
+            </div>
+        </section>
+    </div>
+
+    <div class="fluid-container">
+        <section class="footer">
+
+        </section>
+    </div>
+
+    <%- include ('partials/footer') -%>
+
+    <%- include ('partials/scripts') -%>
+</body>
+
+</html>
