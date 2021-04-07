@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 var upload = multer();
 const router_user = require('./routes/user');
+const router_group = require('./routes/group');
+const router_event = require('./routes/event');
 const redirects = require('./cust_mw');
 const conn = require('./db_conn');
 
@@ -22,6 +24,8 @@ app.use(session({
     saveUninitialized: false,
 }));
 app.use('/user', router_user);
+app.use('/group', router_group);
+app.use('/event', router_event);
 
 // custom middleware
 app.use((req, res, next) => {

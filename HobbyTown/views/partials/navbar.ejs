@@ -38,10 +38,22 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/"> Groups </a>
+                        <a <% if (title === 'Groups') { %> 
+                                class="nav-link active"
+                            <% } else {%>
+                                class="nav-link"
+                            <%} %> aria-current="page" href="/group">
+                            Groups
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/"> Events </a>
+                        <a <% if (title === 'Events') { %> 
+                                class="nav-link active"
+                            <% } else {%>
+                                class="nav-link"
+                            <%} %> aria-current="page" href="/event">
+                            Events
+                        </a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="profile-menu-dropdown" data-toggle="dropdown" href="/">

@@ -39,7 +39,6 @@ router.post('/:id/edit', redirects[0], (req, res) => {
 
     //uploading image
     if (req.files) {
-        
         var file = req.files.profile;
         filename = req.session.user.id.toString() + path.extname(file.name);
 
@@ -49,8 +48,7 @@ router.post('/:id/edit', redirects[0], (req, res) => {
             else {
                 console.log('file uploaded');
             }
-        })
-        
+        });
     }
     var query = `UPDATE user SET first_name = '${first_name}', last_name = '${last_name}', 
                 password = '${password}', profile_pic = '/profile_pics/${filename}' 

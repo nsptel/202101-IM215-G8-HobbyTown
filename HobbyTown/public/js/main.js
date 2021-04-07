@@ -129,7 +129,7 @@ function registerValidation(e) {
 
     // hobbies
     var hobbyChecked = [];
-    for (var i=0; i<hobbies.length; i++) {
+    for (var i = 0; i < hobbies.length; i++) {
         hobbyChecked.push(hobbies[i].checked);
     }
     if (!hobbyChecked.includes(true)) {
@@ -137,7 +137,7 @@ function registerValidation(e) {
         $('#hobby-block').addClass("is-invalid");
         result = false;
     } else {
-        if (hobbyChecked[hobbyChecked.length-1]) {
+        if (hobbyChecked[hobbyChecked.length - 1]) {
             if (!$('#other-hobbies').val().trim().match(/^[a-zA-Z,-\s]+$/)) {
                 $('#other-hobbies-fb').addClass("invalid-feedback mb-3").html("Please enter your other hobbies separated by comma (should not include numbers or any special characters except ',' and '-').");
                 $('#other-hobbies').addClass("is-invalid");
@@ -206,6 +206,44 @@ function updateValidation(e) {
 
     // profile pic
     result = imgValidation(img, $('#profile-pic-fb'))
+
+    return result;
+}
+
+function groupValidation(e) {
+    const name = $('#name');
+    const img = $('#group-pic');
+    var result = true;
+
+    // name
+    result = nameValidation(name, $('#name-fb'), 2, 40) && result;
+
+    // image
+    result = imgValidation(img, $('group-pic-fb')) && result;
+
+    return result;
+}
+
+function eventValidation(e) {
+    const date = $('#date');
+    const time = $('#time');
+    var result = true;
+
+    // name
+    result = nameValidation($('#name'), $('#name-fb'), 2, 60) && result;
+
+    // image
+    result = imgValidation($('#event-pic'), $('event-pic-fb')) && result;
+
+    // time
+    if (time.val() == '') {
+        time.addClass("is-invalid");
+        $('#time-fb').addClass('invalid-feedback').html("Time is invalid.");
+        result = false;
+    } else {
+        time.addClass("is-valid");
+        $('#time-fb').addClass('valid-feedback').html("Looks Good!");
+    }
 
     return result;
 }
