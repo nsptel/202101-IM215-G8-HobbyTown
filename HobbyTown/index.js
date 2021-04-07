@@ -13,9 +13,9 @@ app.set('view engine', 'ejs');
 
 // middleware
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(upload.array());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(session({
     secret: 'SimplySalted',
     resave: false,
@@ -73,10 +73,10 @@ const runQuery = (query) => {
 
 // posts
 // creating a new user
-app.post('/register', redirects[1], (req, res) => {
+app.post('/register', redirects[1], upload.array(), (req, res) => {
     const { email, username, first_name, last_name, password, _, hobby } = req.body;
     var user_id = -1;
-    var queries = `INSERT INTO user (first_name, last_name, email, username, password) VALUES ('${first_name}', '${last_name}', '${email}', '${username}', '${password}');`;
+    var queries = `INSERT INTO user (first_name, last_name, email, username, password, profile_pic) VALUES ('${first_name}', '${last_name}', '${email}', '${username}', '${password}', '/profile_pics/sample_profile.png');`;
     var others;
     if (typeof (hobby) == 'string') {
         others = hobby.split(',');
@@ -121,7 +121,7 @@ app.post('/register', redirects[1], (req, res) => {
 });
 
 // logging in the user
-app.post('/login', redirects[1], (req, res) => {
+app.post('/login', redirects[1], upload.array(), (req, res) => {
     const { email, password } = req.body;
 
     // query
@@ -152,7 +152,7 @@ app.post('/login', redirects[1], (req, res) => {
 });
 
 // Forgot password
-app.post('/forgot_password', redirects[1], (req, res) => {
+app.post('/forgot_password', redirects[1], upload.array(), (req, res) => {
     // getting data
     res.redirect('/forgot_password');
 });

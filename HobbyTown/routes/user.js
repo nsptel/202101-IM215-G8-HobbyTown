@@ -1,15 +1,15 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const path = require('path');
 const multer = require('multer');
 const router = express.Router();
 const redirects = require('../cust_mw');
 const conn = require('../db_conn');
+const fileupload = require('express-fileupload');
 var upload = multer();
 
 // middleware
 router.use(express.json());
-router.use(bodyParser.urlencoded({extended: false}));
-router.use(upload.array());
+router.use(fileupload());
 
 // custom middleware
 router.use((req, res, next) => {
@@ -34,8 +34,27 @@ router.get('/:id/edit', redirects[0], (req, res) => {
 // editing the profile (post)
 router.post('/:id/edit', redirects[0], (req, res) => {
     // getting data
-    const {first_name, last_name, password} = req.body;
-    var query = `UPDATE user SET first_name = '${first_name}', last_name = '${last_name}', password = '${password}' WHERE id = '${req.session.user.id}';`;
+    const { first_name, last_name, password } = req.body;
+    var filename ='sample_profile.png'; 
+
+    //uploading image
+    if (req.files) {
+        
+        var file = req.files.profile;
+        filename = req.session.user.id.toString() + path.extname(file.name);
+
+        file.mv('public/profile_pics/' + filename, function (err) {
+            if (err)
+                console.log('error in uploadation:');
+            else {
+                console.log('file uploaded');
+            }
+        })
+        
+    }
+    var query = `UPDATE user SET first_name = '${first_name}', last_name = '${last_name}', 
+                password = '${password}', profile_pic = '/profile_pics/${filename}' 
+                WHERE id = '${req.session.user.id}';`;
 
     // running the query
     conn.query(query, (err, result, field) => {
