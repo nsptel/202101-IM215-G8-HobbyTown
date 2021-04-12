@@ -35,24 +35,27 @@ router.get('/:id/edit', redirects[0], (req, res) => {
 router.post('/:id/edit', redirects[0], (req, res) => {
     // getting data
     const { first_name, last_name, password } = req.body;
-    var filename ='sample_profile.png'; 
-
-    //uploading image
+    console.log(req.files);
     if (req.files) {
         var file = req.files.profile;
-        filename = req.session.user.id.toString() + path.extname(file.name);
+        console.log(file.name);
+        var filename = req.session.user.id.toString() + path.extname(file.name);
 
-        file.mv('public/profile_pics/' + filename, function (err) {
-            if (err)
-                console.log('error in uploadation:');
-            else {
-                console.log('file uploaded');
+        file.mv('public/profile_pics/' + filename, (err) => {
+            if (err) {
+                res.sendStatus(500)
+            } else {
+                profile = filename;
+                conn.query(`UPDATE user SET profile_pic = '/profile_pics/${filename}' WHERE id = '${req.session.user.id}';`, (err, results, fields) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                });
             }
         });
     }
     var query = `UPDATE user SET first_name = '${first_name}', last_name = '${last_name}', 
-                password = '${password}', profile_pic = '/profile_pics/${filename}' 
-                WHERE id = '${req.session.user.id}';`;
+    password = '${password}' WHERE id = '${req.session.user.id}';`;
 
     // running the query
     conn.query(query, (err, result, field) => {
@@ -61,7 +64,7 @@ router.post('/:id/edit', redirects[0], (req, res) => {
             res.sendStatus(500);
         } else {
             req.session.msg = ["Profile Updated. Changes will be visible the next time you login.", "info"];
-            res.redirect('/user/'+ req.session.user.id);
+            res.redirect('/user/' + req.session.user.id);
         }
     });
 });

@@ -65,7 +65,7 @@ function passwordValidation(pass, passFb, confirmPass, confirmPassFb) {
 
 function imgValidation(file, fb) {
     var files = file[0].files;
-    if (files.length < 1) return true;
+    if (files.length < 1) return false;
     const validExt = ['png', 'jpg', 'gif'];
     var result = true;
     var err = "";
@@ -205,7 +205,7 @@ function updateValidation(e) {
     result = passwordValidation(pass, $('#password-fb'), confirmPass, $('#confirm-password-fb')) && result;
 
     // profile pic
-    result = imgValidation(img, $('#profile-pic-fb'))
+    result = imgValidation(img, $('#profile-pic-fb')) && result;
 
     return result;
 }
@@ -246,4 +246,29 @@ function eventValidation(e) {
     }
 
     return result;
+}
+
+function pictureUpload(e) {
+    const img = $('#profile-pic');
+
+    if (imgValidation(img, $('#profilxe-pic-fb'))) {
+        const file = img[0].files[0];
+        console.log(file);
+
+        const reader = new FileReader();
+
+        reader.onloadend = (e) => {
+            $('#preview').css({ visibility: 'visible' });
+            $('#uploaded-img').attr({
+                src: e.target.result,
+            }).css({
+                width: '150px',
+                height: '150px',
+                borderRadius: '100%',
+                marginBottom: '10px',
+            });
+        }
+
+        reader.readAsDataURL(file);
+    }
 }
