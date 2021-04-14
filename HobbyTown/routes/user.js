@@ -35,10 +35,8 @@ router.get('/:id/edit', redirects[0], (req, res) => {
 router.post('/:id/edit', redirects[0], (req, res) => {
     // getting data
     const { first_name, last_name, password } = req.body;
-    console.log(req.files);
     if (req.files) {
         var file = req.files.profile;
-        console.log(file.name);
         var filename = req.session.user.id.toString() + path.extname(file.name);
 
         file.mv('public/profile_pics/' + filename, (err) => {

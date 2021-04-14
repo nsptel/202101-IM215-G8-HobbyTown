@@ -251,9 +251,8 @@ function eventValidation(e) {
 function pictureUpload(e) {
     const img = $('#profile-pic');
 
-    if (imgValidation(img, $('#profilxe-pic-fb'))) {
-        const file = img[0].files[0];
-        console.log(file);
+    if (imgValidation(img, $('#profile-pic-fb'))) {
+        const file = img[0].files[0]
 
         const reader = new FileReader();
 
