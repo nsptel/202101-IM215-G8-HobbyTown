@@ -47,6 +47,7 @@ router.post('/:id/edit', redirects[0], (req, res) => {
                 conn.query(`UPDATE user SET profile_pic = '/profile_pics/${filename}' WHERE id = '${req.session.user.id}';`, (err, results, fields) => {
                     if (err) {
                         console.error(err);
+                        res.sendStatus(500);
                     }
                 });
             }

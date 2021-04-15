@@ -9,11 +9,26 @@
         <%- include ('partials/msg') -%>
 
         <h1 class="mt-4">Your Groups</h1>
-        <p>The groups you create will appear here.</p>
+        <div class="row">
+            <% if (data.groups.length > 0) { %>
+                <% data.groups.forEach(el => { %>
+                    <div class="col-lg-3 col-md-4 col-sm-8 col-xs-8">
+                        <div class="card mb-3">
+                            <img class="card-img-top" src="<%= el.image %>" alt="group image">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= el.name %></h5>
+                                <p class="card-text"><%= el.description %></p>
+                                <a href="/group/<%= el.id %>" class="btn btn-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>The groups you create will appear here.</p>
+            <% } %>
+        </div>
 
-        <h1></h1>
-
-        <a href="/group/create" class="btn btn-outline-success btn-lg">Create a Group</a>
+        <a href="/group/create" class="btn btn-outline-success btn-lg mt-5">Create a Group</a>
     </div>
 
     <%- include ('partials/footer') -%>

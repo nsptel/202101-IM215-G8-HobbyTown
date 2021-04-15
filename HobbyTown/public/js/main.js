@@ -65,7 +65,7 @@ function passwordValidation(pass, passFb, confirmPass, confirmPassFb) {
 
 function imgValidation(file, fb) {
     var files = file[0].files;
-    if (files.length < 1) return false;
+    if (files.length < 1) return true;
     const validExt = ['png', 'jpg', 'gif'];
     var result = true;
     var err = "";
@@ -249,9 +249,9 @@ function eventValidation(e) {
 }
 
 function pictureUpload(e) {
-    const img = $('#profile-pic');
+    const img = $('#profile-pic,#group-pic,#event-pic');
 
-    if (imgValidation(img, $('#profile-pic-fb'))) {
+    if (img[0].files.length > 0 && imgValidation(img, $('#img-fb'))) {
         const file = img[0].files[0]
 
         const reader = new FileReader();

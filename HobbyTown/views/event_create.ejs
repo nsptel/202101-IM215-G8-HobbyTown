@@ -9,7 +9,7 @@
         <%- include ('partials/msg') -%>
 
         <div class="mt-4">
-            <form method="POST" action="/register" class="col-lg-8 col-md-12" enctype="multipart/form-data"
+            <form method="POST" action="/event/create/" class="col-lg-8 col-md-12" enctype="multipart/form-data"
                 onsubmit="return eventValidation()">
                 <h1 class="mt-4">Create a New Event</h1>
                 <div class="mb-3">
@@ -24,15 +24,20 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Event Date & Time</label>
-                    <input class="form-control" type="date" name="data" id="date" required>
+                    <input class="form-control" type="date" name="date" id="date" required>
                     <br>
                     <input class="form-control" type="time" name="time" id="time">
                     <div id="time-fb"></div>
                 </div>
                 <div class="form-group">
                   <label for="event-pic">Event Photo</label>
-                  <input type="file" class="form-control-file" id="event-pic" name="event_pic">
-                  <div id="event-pic-fb"></div>
+                  <input type="file" onchange="pictureUpload()" class="form-control-file" id="event-pic" name="event_pic">
+                  <div id="img-fb"></div>
+                </div>
+                <div id="preview" style="visibility: hidden;">
+                    <label class="form-label" id='preview-label'>Preview</label>
+                    <br>
+                    <img src="" id="uploaded-img"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>
