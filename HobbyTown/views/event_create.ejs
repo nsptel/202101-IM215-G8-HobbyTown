@@ -9,7 +9,7 @@
         <%- include ('partials/msg') -%>
 
         <div class="mt-4">
-            <form method="POST" action="/event/create/" class="col-lg-8 col-md-12" enctype="multipart/form-data"
+            <form method="POST" action="/event/create/<%= data.groupId %>" class="col-lg-8 col-md-12" enctype="multipart/form-data"
                 onsubmit="return eventValidation()">
                 <h1 class="mt-4">Create a New Event</h1>
                 <div class="mb-3">

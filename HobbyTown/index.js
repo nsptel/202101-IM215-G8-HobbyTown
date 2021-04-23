@@ -92,8 +92,6 @@ app.post('/register', redirects[1], upload.array(), (req, res) => {
             queries += `INSERT IGNORE INTO hobby (name) VALUES ('${others[j].trim()}');`;
         }
     }
-    console.log(queries);
-    console.log(others);
     runQuery(queries).then(rows => {
         user_id = (rows.length) ? rows[0].insertId : rows.insertId;
         var all_hobbies;
@@ -103,12 +101,10 @@ app.post('/register', redirects[1], upload.array(), (req, res) => {
             all_hobbies = others.concat(hobby.slice(0, hobby.length - 1));
         }
         var query = `SELECT id FROM hobby WHERE name IN ('${all_hobbies.join("','")}')`;
-        console.log(query);
         return runQuery(query);
     }).then(rows => {
         var uh_ids = rows.map(x => '(' + user_id.toString() + ', ' + x.id.toString() + ')');
         uh_q = `INSERT INTO user_hobby (user_id, hobby_id) VALUES ` + uh_ids.join(',');
-        console.log(uh_q);
         return runQuery(uh_q);
     }).then(rows => {
         req.session.msg = ["Registration Successful", "success"];

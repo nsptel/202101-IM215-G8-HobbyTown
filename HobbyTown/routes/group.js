@@ -42,6 +42,31 @@ router.get('/create', redirects[0], (req, res) => {
     res.render('group_create', { title: "Create Group", msg: msg });
 });
 
+// group view page
+router.get('/:id', redirects[0], (req, res) => {
+    var msg = req.session.msg;
+    req.session.msg = null;
+    var query = `SELECT * FROM \`group\` WHERE id = ${req.params.id};`;
+    conn.query(query, (err1, result1, fields1) => {
+        if (err1) {
+            console.error(err1);
+            res.sendStatus(500);
+        } else {
+            var query2 = `SELECT * FROM user WHERE id = ${result1[0].creator}; 
+                          SELECT * FROM user WHERE id IN (SELECT user_id FROM user_group WHERE group_id = ${req.params.id});
+                          SELECT * FROM event WHERE group_id = ${req.params.id};`;
+            conn.query(query2, (err2, result2, fields2) => {
+                if (err2) {
+                    console.error(err2);
+                    res.sendStatus(500);
+                } else {
+                    res.render('group_view', {title: "Group Page", msg: msg, data: {group: result1, users: result2}});
+                }
+            });
+        }
+    });
+});
+
 // posts
 // group create page
 router.post('/create', redirects[0], (req, res) => {
@@ -78,5 +103,6 @@ router.post('/create', redirects[0], (req, res) => {
         }
     });
 });
+
 
 module.exports = router;

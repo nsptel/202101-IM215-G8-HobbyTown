@@ -21,7 +21,21 @@ router.use((req, res, next) => {
 router.get('/:id', redirects[0], (req, res) => {
     var msg = req.session.msg;
     req.session.msg = null;
-    res.render('user_profile', { title: "User Profile", msg: msg });
+
+    var query = `SELECT * FROM user WHERE id = ${req.params.id}`;
+    conn.query(query, (err, result, field) => {
+        if (err) {
+            console.err(error);
+            res.redirect(500);
+        } else {
+            if (result.length > 0) {
+                res.render('user_profile', { title: "User Profile", msg: msg, data: {user: result[0]} });
+            } else {
+                req.session.msg = ["Unauthorized Access", "danger"];
+                res.redirect('/');
+            }
+        }
+    })
 });
 
 // editing the profile

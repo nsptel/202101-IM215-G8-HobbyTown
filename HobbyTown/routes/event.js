@@ -36,10 +36,10 @@ router.get('/', redirects[0], (req, res) => {
 });
 
 // group create page
-router.get('/create', redirects[0], (req, res) => {
+router.get('/create/:id', redirects[0], (req, res) => {
     var msg = req.session.msg;
     req.session.msg = null;
-    res.render('event_create', { title: "Create Event", msg: msg });
+    res.render('event_create', { title: "Create Event", msg: msg, data: {groupId: req.params.id} });
 });
 
 // posts

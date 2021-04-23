@@ -9,7 +9,7 @@
         <div class="col-md-6 col-xs-12" id="last-login">
             <p class="text-md-right text-sm-center mt-md-2">
                 <% if (user) { %>
-                    Last Login: <%= new Date(user.timestamp).toString() %>
+                    Last Login: <%= new Date(user.timestamp).toString().split("GMT")[0] %>
                 <% } %>
             </p>
         </div>
