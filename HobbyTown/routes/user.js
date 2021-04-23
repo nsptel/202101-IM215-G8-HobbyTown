@@ -18,7 +18,7 @@ router.use((req, res, next) => {
 });
 
 // getting user profile
-router.get('/:id', redirects[0], (req, res) => {
+router.get('/:id', (req, res) => {
     var msg = req.session.msg;
     req.session.msg = null;
 

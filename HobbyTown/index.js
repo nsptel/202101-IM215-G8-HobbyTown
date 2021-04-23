@@ -38,7 +38,42 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     var msg = req.session.msg;
     req.session.msg = null;
-    res.render('index', { title: "Home", msg: msg });
+
+    var query = `SELECT * FROM \`group\` ORDER BY timestamp DESC LIMIT 4;
+                 SELECT * FROM event ORDER BY timestamp DESC LIMIT 4`;
+
+    conn.query(query, (err, result, field) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        } else {
+            res.render('index', { title: "Home", msg: msg, data: {groups: result[0], events: result[1]} });
+        }
+    })
+});
+
+// search
+app.get('/search', (req, res) => {
+    var msg = req.session.msg;
+    req.session.msg = null;
+
+    const search = req.query.search;
+    var query = `SELECT * FROM user WHERE first_name LIKE '${search}%' OR last_name LIKE '${search}%' OR CONCAT(first_name, ' ', last_name) LIKE '${search}%';
+                 SELECT * FROM \`group\` WHERE name LIKE '%${search}%';
+                 SELECT * FROM event WHERE name LIKE '%${search}%';`;
+    conn.query(query, (err, result, field) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        } else {
+            if (search.trim() !== '') {
+                res.render('search', {title: "Search Results", msg: msg, data: {users: result[0], groups: result[1], events: result[2]}});
+            } else {
+                req.session.msg = ["Empty search strings are not allowed.", "secondary"];
+                res.redirect('/');
+            }
+        }
+    })
 });
 
 // login

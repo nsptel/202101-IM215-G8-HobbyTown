@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <% if (data.user.id === user.id) { %>
+        <% if (user && data.user.id === user.id) { %>
             <a href="/user/<%= user.id %>/edit" class="link">Update your profile</a>
         <% } %>
     </div>

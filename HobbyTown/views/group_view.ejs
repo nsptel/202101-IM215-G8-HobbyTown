@@ -7,7 +7,7 @@
     <div class="container">
 
         <%- include ('partials/msg') -%>
-        <% if (data.group[0].creator === user.id) { %>
+        <% if (user && data.group[0].creator === user.id) { %>
         <br>
         <div class="clearfix">
             <a class="btn btn-lg btn-outline-success float-right" href="/event/create/<%= data.group[0].id %>">Create an
@@ -57,7 +57,7 @@
         <div class="events">
             <h3>Group Events</h3>
             <% if (data.users[2].length > 0) { %>
-                <table class="table">
+                <table class="table table-hover">
                     <tr>
                         <th>Name</th>
                         <th>Date</th>
@@ -78,7 +78,7 @@
 
         <div class="members">
             <h3>Group Members</h3>
-            <table class='table'>
+            <table class='table table-hover'>
                 <tr>
                     <th>Name</th>
                     <th>Role</th>

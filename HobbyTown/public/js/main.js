@@ -225,7 +225,6 @@ function groupValidation(e) {
 }
 
 function eventValidation(e) {
-    const date = $('#date');
     const time = $('#time');
     var result = true;
 
@@ -270,4 +269,14 @@ function pictureUpload(e) {
 
         reader.readAsDataURL(file);
     }
+}
+
+function searchValidation() {
+    const search = $('#search');
+    if (search.val().trim() === '') {
+        search.addClass('is-invalid');
+        $('#search-fb').addClass('invalid-feedback').html('Please enter an input.');
+        return false;
+    }
+    return true;
 }

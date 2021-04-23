@@ -24,11 +24,12 @@
         </section>
         <section class="search mb-5">
             <div class="w-75 mx-auto">
-                <form method="GET">
+                <form method="GET" action="/search" onsubmit="return searchValidation()">
                     <div class="form-row align-items-center">
                         <div class="col-lg-9 col-sm-8 col-xs-8">
                             <label class="sr-only" for="search">Name</label>
-                            <input type="text" class="form-control" id="search" placeholder="Find your interests...">
+                            <input type="text" class="form-control" name="search" id="search" placeholder="Find your interests...">
+                            <div id="search-fb"></div>
                         </div>
                         <div class="col-lg-3 col-sm-4 col-xs-4">
                             <button type="submit" id="search-btn" class="btn btn-primary w-100">Search</button>
@@ -39,14 +40,48 @@
         </section>
         <section class="groups mb-5">
             <div>
-                <h1>Groups</h1>
-                <p>No groups available for now.</p>
+                <h1>Latest Groups</h1>
+                <% if (data.groups.length > 0) { %>
+                    <div class="row">
+                        <% data.groups.forEach(el => { %>
+                            <div class="col-lg-3 col-md-4 col-sm-8 col-xs-8">
+                                <div class="card mb-3 pt-2">
+                                    <img class="card-img-top m-auto" style="height: 200px; width: 200px;" src="<%= el.image %>" alt="group image">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= el.name %></h5>
+                                        <p class="card-text"><%= el.description %></p>
+                                        <a href="/group/<%= el.id %>" class="btn btn-primary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } else { %>
+                    <p>No groups available for now.</p>
+                <% } %>
             </div>
         </section>
         <section class="events mb-5">
             <div>
-                <h1>Events</h1>
-                <p>No events available to participate in.</p>
+                <h1>Latest Events</h1>
+                <% if (data.events.length > 0) { %>
+                    <div class="row">
+                        <% data.events.forEach(el => { %>
+                            <div class="col-lg-3 col-md-4 col-sm-8 col-xs-8">
+                                <div class="card mb-3 pt-2">
+                                    <img class="card-img-top m-auto" style="height: 200px; width: 200px;" src="<%= el.image %>" alt="group image">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= el.name %></h5>
+                                        <p class="card-text"><%= el.event_date.toString().split("GMT")[0] %></p>
+                                        <a href="/event/<%= el.id %>" class="btn btn-primary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } else { %>
+                    <p>No events available to participate in.</p>
+                <% } %>
             </div>
         </section>
     </div>

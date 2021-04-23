@@ -13,8 +13,8 @@
             <% if (data.groups.length > 0) { %>
                 <% data.groups.forEach(el => { %>
                     <div class="col-lg-3 col-md-4 col-sm-8 col-xs-8">
-                        <div class="card mb-3">
-                            <img class="card-img-top" src="<%= el.image %>" alt="group image">
+                        <div class="card mb-3 pt-2">
+                            <img class="card-img-top m-auto" style="height: 200px; width: 200px;" src="<%= el.image %>" alt="group image">
                             <div class="card-body">
                                 <h5 class="card-title"><%= el.name %></h5>
                                 <p class="card-text"><%= el.description %></p>
