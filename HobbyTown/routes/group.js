@@ -104,5 +104,35 @@ router.post('/create', redirects[0], (req, res) => {
     });
 });
 
+// join the group
+router.post('/:id/join', redirects[0], (req, res) => {
+    var query = `INSERT INTO user_group (user_id, group_id) VALUES (${req.session.user.id}, ${req.params.id});`;
+
+    conn.query(query, (err, result, field) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        } else {
+            req.session.msg = ["You successfully joined the group.", "success"];
+            res.redirect('/group/' + req.params.id);
+        }
+    });
+});
+
+// delete the group
+router.delete('/:id', redirects[0], (req, res) => {
+    var query = `DELETE FROM user_group WHERE group_id = ${req.params.id};
+                 DELETE FROM \`group\` WHERE id = ${req.params.id};`;
+
+    conn.query(query, (err, result, field) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        } else {
+            req.session.msg = ["Group successfully deleted.", "info"];
+            res.json({redirect: '../group'});
+        }
+    });
+});
 
 module.exports = router;

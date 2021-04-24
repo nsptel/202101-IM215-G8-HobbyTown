@@ -280,3 +280,15 @@ function searchValidation() {
     }
     return true;
 }
+
+function deleteRequest(e, url) {
+    e.preventDefault();
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+    }).done(data => {
+        window.location.replace(data.redirect);
+    }).fail(err => {
+        console.log(err);
+    });
+}

@@ -18,7 +18,7 @@ router.use((req, res, next) => {
 });
 
 // gets
-// group page
+// events page
 router.get('/', redirects[0], (req, res) => {
     var msg = req.session.msg;
     req.session.msg = null;
@@ -31,6 +31,23 @@ router.get('/', redirects[0], (req, res) => {
             res.sendStatus(500);
         } else {
             res.render('event', { title: "Events", msg: msg, data: {events: rows} });
+        }
+    });
+});
+
+// event view page
+router.get('/:id', (req, res) => {
+    var msg = req.session.msg;
+    req.session.msg = null;
+
+    // getting groups from db
+    var query = `SELECT * FROM event WHERE id = ${req.params.id};`;
+    conn.query(query, (err, rows, fields) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        } else {
+            res.render('event_view', { title: "Event Page", msg: msg, data: {event: rows[0]} });
         }
     });
 });
@@ -77,6 +94,21 @@ router.post('/create/:group_id', redirects[0], (req, res) => {
             }
             req.session.msg = ["Event successfully created.", "success"];
             res.redirect('/event');
+        }
+    });
+});
+
+// delete the event
+router.delete('/:id', (req, res) => {
+    var query = `DELETE FROM event WHERE id = ${req.params.id};`;
+
+    conn.query(query, (err, result, field) => {
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+        } else {
+            req.session.msg = ["Event successfully deleted.", "info"];
+            res.json({redirect: '../event'});
         }
     });
 });

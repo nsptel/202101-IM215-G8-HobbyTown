@@ -54,25 +54,36 @@
             </div>
         </div>
 
+        <% if (user && data.users[0][0].id !== user.id && !data.users[1].map(el => el.id).includes(user.id)) { %>
+        <div class="join-group">
+            <br>
+            <form action="/group/<%= data.group[0].id %>/join" method="POST">
+                <input type="submit" value="Join Group" class="btn btn-primary">
+            </form>
+            <br>
+        </div>
+        <% } %>
+
         <div class="events">
             <h3>Group Events</h3>
             <% if (data.users[2].length > 0) { %>
-                <table class="table table-hover">
-                    <tr>
-                        <th>Name</th>
-                        <th>Date</th>
-                        <th>View</th>
-                    </tr>
-                    <% data.users[2].forEach(el => { %>
-                        <tr>
-                            <td><img src="<%= el.image %>" class="mr-2" alt="Event Image" style="height:28px; width: 28px; border-radius: 100%;"><%= el.name %></td>
-                            <td><%= el.event_date.toString().split("GMT")[0] %></td>
-                            <td><a href="/event/<%= el.id %>">View Event</a></td>
-                        </tr>
-                    <% }); %>
-                </table>
+            <table class="table table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>View</th>
+                </tr>
+                <% data.users[2].forEach(el => { %>
+                <tr>
+                    <td><img src="<%= el.image %>" class="mr-2" alt="Event Image"
+                            style="height:28px; width: 28px; border-radius: 100%;"><%= el.name %></td>
+                    <td><%= el.event_date.toString().split("GMT")[0] %></td>
+                    <td><a href="/event/<%= el.id %>">View Event</a></td>
+                </tr>
+                <% }); %>
+            </table>
             <% } else { %>
-                <p>This group has no events for now.</p>
+            <p>This group has no events for now.</p>
             <% } %>
         </div>
 
@@ -92,19 +103,22 @@
                     <td><a href="/user/<%= data.users[0][0].id %>">View Profile</a></td>
                 </tr>
                 <% if (data.users[1].length > 0) { %>
-                    <%  data.users[1].forEach(el => { %>
-                        <tr>
-                            <td><img src="<%= el.profile_pic %>" class="mr-2" alt="User Profile Pic"
-                                    style="height:28px; width: 28px; border-radius: 100%;"><%= el.first_name + ' ' + el.last_name %>
-                            </td>
-                            <td>Member</td>
-                            <td><a href="/user/<%= el.id %>">View Profile</a></td>
-                        </tr>
-                    <% }) %>
+                <%  data.users[1].forEach(el => { %>
+                <tr>
+                    <td><img src="<%= el.profile_pic %>" class="mr-2" alt="User Profile Pic"
+                            style="height:28px; width: 28px; border-radius: 100%;"><%= el.first_name + ' ' + el.last_name %>
+                    </td>
+                    <td>Member</td>
+                    <td><a href="/user/<%= el.id %>">View Profile</a></td>
+                </tr>
+                <% }) %>
                 <% } %>
             </table>
         </div>
-    </div>
+
+        <% if (user && user.id == data.group[0].creator) { %>
+            <a class="btn btn-danger" onclick="deleteRequest(event, '/group/<%= data.group[0].id %>')">Delete Group</a>
+        <% } %>
     </div>
 
     <%- include ('partials/footer') -%>
