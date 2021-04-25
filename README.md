@@ -2,4 +2,5 @@
 
 # References
 
-> Youtube Link: https://youtu.be/zpEgfFmDdEc 
+> Youtube Link Part 1: https://youtu.be/zpEgfFmDdEc 
+> Youtube Link Part 2: https://youtu.be/NG185IierCA
