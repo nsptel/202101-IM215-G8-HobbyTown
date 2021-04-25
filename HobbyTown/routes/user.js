@@ -18,10 +18,24 @@ router.use((req, res, next) => {
 });
 
 // getting user profile
-router.get('/:id', redirects[0], (req, res) => {
+router.get('/:id', (req, res) => {
     var msg = req.session.msg;
     req.session.msg = null;
-    res.render('user_profile', { title: "User Profile", msg: msg });
+
+    var query = `SELECT * FROM user WHERE id = ${req.params.id}`;
+    conn.query(query, (err, result, field) => {
+        if (err) {
+            console.err(error);
+            res.redirect(500);
+        } else {
+            if (result.length > 0) {
+                res.render('user_profile', { title: "User Profile", msg: msg, data: {user: result[0]} });
+            } else {
+                req.session.msg = ["Unauthorized Access", "danger"];
+                res.redirect('/');
+            }
+        }
+    })
 });
 
 // editing the profile
@@ -35,10 +49,8 @@ router.get('/:id/edit', redirects[0], (req, res) => {
 router.post('/:id/edit', redirects[0], (req, res) => {
     // getting data
     const { first_name, last_name, password } = req.body;
-    console.log(req.files);
     if (req.files) {
         var file = req.files.profile;
-        console.log(file.name);
         var filename = req.session.user.id.toString() + path.extname(file.name);
 
         file.mv('public/profile_pics/' + filename, (err) => {
@@ -49,6 +61,7 @@ router.post('/:id/edit', redirects[0], (req, res) => {
                 conn.query(`UPDATE user SET profile_pic = '/profile_pics/${filename}' WHERE id = '${req.session.user.id}';`, (err, results, fields) => {
                     if (err) {
                         console.error(err);
+                        res.sendStatus(500);
                     }
                 });
             }

@@ -38,7 +38,42 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     var msg = req.session.msg;
     req.session.msg = null;
-    res.render('index', { title: "Home", msg: msg });
+
+    var query = `SELECT * FROM \`group\` ORDER BY timestamp DESC LIMIT 4;
+                 SELECT * FROM event ORDER BY timestamp DESC LIMIT 4`;
+
+    conn.query(query, (err, result, field) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        } else {
+            res.render('index', { title: "Home", msg: msg, data: {groups: result[0], events: result[1]} });
+        }
+    })
+});
+
+// search
+app.get('/search', (req, res) => {
+    var msg = req.session.msg;
+    req.session.msg = null;
+
+    const search = req.query.search;
+    var query = `SELECT * FROM user WHERE first_name LIKE '${search}%' OR last_name LIKE '${search}%' OR CONCAT(first_name, ' ', last_name) LIKE '${search}%';
+                 SELECT * FROM \`group\` WHERE name LIKE '%${search}%';
+                 SELECT * FROM event WHERE name LIKE '%${search}%';`;
+    conn.query(query, (err, result, field) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        } else {
+            if (search.trim() !== '') {
+                res.render('search', {title: "Search Results", msg: msg, data: {users: result[0], groups: result[1], events: result[2]}});
+            } else {
+                req.session.msg = ["Empty search strings are not allowed.", "secondary"];
+                res.redirect('/');
+            }
+        }
+    })
 });
 
 // login
@@ -92,8 +127,6 @@ app.post('/register', redirects[1], upload.array(), (req, res) => {
             queries += `INSERT IGNORE INTO hobby (name) VALUES ('${others[j].trim()}');`;
         }
     }
-    console.log(queries);
-    console.log(others);
     runQuery(queries).then(rows => {
         user_id = (rows.length) ? rows[0].insertId : rows.insertId;
         var all_hobbies;
@@ -103,12 +136,10 @@ app.post('/register', redirects[1], upload.array(), (req, res) => {
             all_hobbies = others.concat(hobby.slice(0, hobby.length - 1));
         }
         var query = `SELECT id FROM hobby WHERE name IN ('${all_hobbies.join("','")}')`;
-        console.log(query);
         return runQuery(query);
     }).then(rows => {
         var uh_ids = rows.map(x => '(' + user_id.toString() + ', ' + x.id.toString() + ')');
         uh_q = `INSERT INTO user_hobby (user_id, hobby_id) VALUES ` + uh_ids.join(',');
-        console.log(uh_q);
         return runQuery(uh_q);
     }).then(rows => {
         req.session.msg = ["Registration Successful", "success"];
@@ -156,9 +187,26 @@ app.post('/login', redirects[1], upload.array(), (req, res) => {
 });
 
 // Forgot password
-app.post('/forgot_password', redirects[1], upload.array(), (req, res) => {
+app.post('/forgot_password/:email', redirects[1], upload.array(), (req, res) => {
     // getting data
-    res.redirect('/forgot_password');
+    
+    // query
+    var query = ``;
+
+    var email = req.params.email;
+        
+    // checking if the user entered email or username
+    query += `SELECT * FROM user WHERE email = '${email}'`;
+    
+    conn.query(query, (err, result, field) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        }else{
+            console.log(result);
+            res.json({result: result})
+        }
+    });
 });
 
 // Logging out

@@ -4,8 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="author" content="Chintan Trivedi, Nilkumar Patel and Chaitaliben Rahol" />
-  <title>PDF Documentation of Rest API calls</title>
+  <title>pdfDocumentation</title>
   <style>
     html {
       line-height: 1.5;
@@ -150,42 +149,26 @@
   <![endif]-->
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">PDF Documentation of Rest API calls</h1>
-<p class="author">Chintan Trivedi, Nilkumar Patel and Chaitaliben Rahol</p>
-</header>
-<p>Chintan Trivedi, Nilkumar Patel and Chaitaliben Rahol</p>
-<p>April 04, 2021</p>
+<h2 id="authors-chintan-trivedi-nilkumar-patel-chaitaliben-rahol">Authors: Chintan Trivedi, Nilkumar Patel, Chaitaliben Rahol</h2>
+<h2 id="date-april-24-2021">Date: April 24, 2021</h2>
 <h1 id="introduction">Introduction</h1>
 <p>This file contains detail information about every Rest API we used in our project.</p>
 <h1 id="body">Body</h1>
-<ol type="1">
-<li>GET API</li>
-</ol>
-<blockquote>
+<h2 id="get-api">GET API</h2>
 <p>It is usually used for geeting a data from the server</p>
-</blockquote>
-<blockquote>
-<p><strong>Syntax:</strong> app.get(URL here, function here )</p>
-</blockquote>
-<blockquote>
+<p>Syntax: app.get(URL here, function here )</p>
 <p>app.get(‘/’, (req, res) =&gt; { res.render(‘index’, { title: “Home”, msg: msg });}); This Example used in our website and it is giving us index page with title of the page and the meassage we want to send to the page.</p>
-</blockquote>
-<ol start="2" type="1">
-<li>POST API:</li>
-</ol>
-<blockquote>
+<h2 id="post-api">POST API:</h2>
 <p>It is usually used for submitting or updating existing data into the server</p>
-</blockquote>
-<blockquote>
-<p><strong>Syntax:</strong> app.post(URL here, function here )</p>
-</blockquote>
-<blockquote>
+<p>Syntax: app.post(URL here, function here )</p>
 <p>app.post(‘/logout’, redirects[0], (req, res) =&gt; { res.redirect(‘/’);}); This Example used in our website and it is logout page with access control middleware and function which redirect to the index.</p>
-</blockquote>
+<h2 id="delete-api">DELETE API:</h2>
+<p>It usually used to delete existing data in database.</p>
+<p>Syntax: app.delete(URL here, function here )</p>
+<p>router.delete(‘/:id’, (req, res) =&gt; { //code here }; This Example used in our website and it is on event display ejs page and it is used to delete the event.</p>
 <h1 id="references">References</h1>
-<blockquote>
-<p>Youtube Link: https://youtu.be/zpEgfFmDdEc GitHub Link: https://github.com/ConfederationCollege-WebDevs/202101-IM215-G8-HobbyTown</p>
-</blockquote>
+<h2 id="youtube-link-project-1-httpsyoutu.bezpegffmddec">Youtube Link Project 1: https://youtu.be/zpEgfFmDdEc</h2>
+<h2 id="youtube-link-project-2-httpsyoutu.beng185iierca">Youtube Link Project 2: https://youtu.be/NG185IierCA</h2>
+<h2 id="github-linkhttpsgithub.comconfederationcollege-webdevs202101-im215-g8-hobbytown">GitHub Link:https://github.com/ConfederationCollege-WebDevs/202101-IM215-G8-HobbyTown</h2>
 </body>
 </html>

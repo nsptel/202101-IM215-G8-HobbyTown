@@ -65,7 +65,7 @@ function passwordValidation(pass, passFb, confirmPass, confirmPassFb) {
 
 function imgValidation(file, fb) {
     var files = file[0].files;
-    if (files.length < 1) return false;
+    if (files.length < 1) return true;
     const validExt = ['png', 'jpg', 'gif'];
     var result = true;
     var err = "";
@@ -186,7 +186,48 @@ function loginValidation(e) {
 }
 
 function forgotPassValidation(e) {
-    return emailValidation($('#email'), $('#email-fb'));
+    
+        var email = $('#email')[0].value;
+        
+        e.preventDefault();
+        if(emailValidation($('#email'), $('#email-fb'))){
+            $.ajax({
+                url: `/forgot_password/${email}`,
+                type: 'POST',
+            }).done(data => {
+                
+                if(data.result.length > 0){
+                    
+                    sendEmail(data.result[0]);
+                } else{
+                    $('#email').addClass("is-invalid");
+                    $('#email-fb').addClass('invalid-feedback').html('Not registered with our Webssite. Please Sign Up!!');
+                }
+
+            }).fail(err => {
+                console.log(err);
+            });
+        }
+    // return emailValidation($('#email'), $('#email-fb'));
+}
+// hsgtlfknjlofpldm
+function sendEmail(output){
+    
+    Email.send({
+        Host : "smtp.gmail.com",
+        Username : "hobbytownnoreply@gmail.com",
+        Password : "hobbytown",
+        To : output.email,
+        From : "hobbytownnoreply@gmail.com",
+        Subject : `${output.first_name + ' ' + output.last_name} Here is your Credentials`,
+        Body : `here is your username and password, <br>
+            UserName: '${output.username}'<br>
+            PassWord: '${output.password}'`,
+    }).then(() => {
+        $('#email').addClass("is-valid");
+        $('#email-fb').addClass('valid-feedback').html("Email has been sent to your Email address.");
+    });
+    
 }
 
 function updateValidation(e) {
@@ -225,7 +266,6 @@ function groupValidation(e) {
 }
 
 function eventValidation(e) {
-    const date = $('#date');
     const time = $('#time');
     var result = true;
 
@@ -249,11 +289,10 @@ function eventValidation(e) {
 }
 
 function pictureUpload(e) {
-    const img = $('#profile-pic');
+    const img = $('#profile-pic,#group-pic,#event-pic');
 
-    if (imgValidation(img, $('#profilxe-pic-fb'))) {
-        const file = img[0].files[0];
-        console.log(file);
+    if (img[0].files.length > 0 && imgValidation(img, $('#img-fb'))) {
+        const file = img[0].files[0]
 
         const reader = new FileReader();
 
@@ -271,4 +310,26 @@ function pictureUpload(e) {
 
         reader.readAsDataURL(file);
     }
+}
+
+function searchValidation() {
+    const search = $('#search');
+    if (search.val().trim() === '') {
+        search.addClass('is-invalid');
+        $('#search-fb').addClass('invalid-feedback').html('Please enter an input.');
+        return false;
+    }
+    return true;
+}
+
+function deleteRequest(e, url) {
+    e.preventDefault();
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+    }).done(data => {
+        window.location.replace(data.redirect);
+    }).fail(err => {
+        console.log(err);
+    });
 }

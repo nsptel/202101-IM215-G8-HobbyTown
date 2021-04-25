@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 CREATE DATABASE  IF NOT EXISTS `202101-im215-hobbytown` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `202101-im215-hobbytown`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
@@ -5,6 +6,13 @@ USE `202101-im215-hobbytown`;
 -- Host: localhost    Database: 202101-im215-hobbytown
 -- ------------------------------------------------------
 -- Server version	8.0.19
+=======
+-- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
+--
+-- Host: localhost    Database: 202101-im215-hobbytown
+-- ------------------------------------------------------
+-- Server version	8.0.23
+>>>>>>> Milestone-C
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -40,6 +48,10 @@ CREATE TABLE `user_group` (
 
 LOCK TABLES `user_group` WRITE;
 /*!40000 ALTER TABLE `user_group` DISABLE KEYS */;
+<<<<<<< HEAD
+=======
+INSERT INTO `user_group` VALUES (23,12);
+>>>>>>> Milestone-C
 /*!40000 ALTER TABLE `user_group` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +64,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
 -- Dump completed on 2021-04-14  1:39:20
+=======
+-- Dump completed on 2021-04-24 23:09:22
+>>>>>>> Milestone-C
