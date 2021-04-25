@@ -2,5 +2,5 @@
 
 # References
 
-> Youtube Link Project 1: https://youtu.be/zpEgfFmDdEc 
-> Youtube Link Project 2: 
+> Youtube Link Part 1: https://youtu.be/zpEgfFmDdEc 
+> Youtube Link Part 2: https://youtu.be/NG185IierCA
