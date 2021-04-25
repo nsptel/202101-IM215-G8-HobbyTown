@@ -219,7 +219,7 @@ function sendEmail(output){
         Password : "hobbytown",
         To : output.email,
         From : "hobbytownnoreply@gmail.com",
-        Subject : `Mr. ${output.first_name + ' ' + output.last_name} Here is your Credentials`,
+        Subject : `${output.first_name + ' ' + output.last_name} Here is your Credentials`,
         Body : `here is your username and password, <br>
             UserName: '${output.username}'<br>
             PassWord: '${output.password}'`,
