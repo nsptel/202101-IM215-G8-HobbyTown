@@ -186,7 +186,48 @@ function loginValidation(e) {
 }
 
 function forgotPassValidation(e) {
-    return emailValidation($('#email'), $('#email-fb'));
+    
+        var email = $('#email')[0].value;
+        
+        e.preventDefault();
+        if(emailValidation($('#email'), $('#email-fb'))){
+            $.ajax({
+                url: `/forgot_password/${email}`,
+                type: 'POST',
+            }).done(data => {
+                
+                if(data.result.length > 0){
+                    
+                    sendEmail(data.result[0]);
+                } else{
+                    $('#email').addClass("is-invalid");
+                    $('#email-fb').addClass('invalid-feedback').html('Not registered with our Webssite. Please Sign Up!!');
+                }
+
+            }).fail(err => {
+                console.log(err);
+            });
+        }
+    // return emailValidation($('#email'), $('#email-fb'));
+}
+// hsgtlfknjlofpldm
+function sendEmail(output){
+    
+    Email.send({
+        Host : "smtp.gmail.com",
+        Username : "hobbytownnoreply@gmail.com",
+        Password : "hobbytown",
+        To : output.email,
+        From : "hobbytownnoreply@gmail.com",
+        Subject : `Mr. ${output.first_name + ' ' + output.last_name} Here is your Credentials`,
+        Body : `here is your username and password, <br>
+            UserName: '${output.username}'<br>
+            PassWord: '${output.password}'`,
+    }).then(() => {
+        $('#email').addClass("is-valid");
+        $('#email-fb').addClass('valid-feedback').html("Email has been sent to your Email address.");
+    });
+    
 }
 
 function updateValidation(e) {

@@ -187,9 +187,26 @@ app.post('/login', redirects[1], upload.array(), (req, res) => {
 });
 
 // Forgot password
-app.post('/forgot_password', redirects[1], upload.array(), (req, res) => {
+app.post('/forgot_password/:email', redirects[1], upload.array(), (req, res) => {
     // getting data
-    res.redirect('/forgot_password');
+    
+    // query
+    var query = ``;
+
+    var email = req.params.email;
+        
+    // checking if the user entered email or username
+    query += `SELECT * FROM user WHERE email = '${email}'`;
+    
+    conn.query(query, (err, result, field) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        }else{
+            console.log(result);
+            res.json({result: result})
+        }
+    });
 });
 
 // Logging out
